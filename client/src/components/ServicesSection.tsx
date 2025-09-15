@@ -72,7 +72,7 @@ export default function ServicesSection() {
                 data-testid={`card-service-${index}`}
               >
                 <CardHeader className="pb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-ring rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <IconComponent className="h-8 w-8 text-primary-foreground" />
                   </div>
                   <CardTitle className="text-xl font-semibold text-foreground">
@@ -112,8 +112,8 @@ export default function ServicesSection() {
                   </div>
                 </CardContent>
 
-                {/* Hover Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-ring/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                {/* Hover Effect */}
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </Card>
             );
           })}
@@ -130,7 +130,6 @@ export default function ServicesSection() {
               if (element) element.scrollIntoView({ behavior: "smooth" });
             }}
             size="lg"
-            className="bg-gradient-to-r from-primary to-ring"
             data-testid="button-contact-us"
           >
             Contact Us Today

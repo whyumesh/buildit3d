@@ -62,7 +62,7 @@ export default function HeroSection() {
           {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
             Transform Ideas Into
-            <span className="bg-gradient-to-r from-primary to-ring bg-clip-text text-transparent">
+            <span className="text-primary">
               {" "}Reality
             </span>
           </h1>
@@ -78,7 +78,7 @@ export default function HeroSection() {
             <Button
               size="lg"
               onClick={scrollToContact}
-              className="bg-gradient-to-r from-primary to-ring text-primary-foreground px-8 py-4 text-lg font-semibold group"
+              className="px-8 py-4 text-lg font-semibold group"
               data-testid="button-start-project"
             >
               Start Your Project

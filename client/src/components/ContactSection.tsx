@@ -280,7 +280,7 @@ export default function ContactSection() {
                     type="submit"
                     size="lg"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary to-ring"
+                    className="w-full"
                     data-testid="button-submit-quote"
                   >
                     {isSubmitting ? "Sending..." : "Send Quote Request"}

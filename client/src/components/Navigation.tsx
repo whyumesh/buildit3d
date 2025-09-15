@@ -24,7 +24,7 @@ export default function Navigation() {
               className="text-2xl font-bold text-primary hover-elevate"
               data-testid="logo-button"
             >
-              Builit3D
+              Buildit3D
             </button>
           </div>
 
@@ -59,7 +59,6 @@ export default function Navigation() {
           <div className="hidden md:block">
             <Button
               onClick={() => scrollToSection("contact")}
-              className="bg-gradient-to-r from-primary to-ring"
               data-testid="button-get-quote"
             >
               Get Quote
@@ -107,7 +106,7 @@ export default function Navigation() {
               <div className="pt-2">
                 <Button
                   onClick={() => scrollToSection("contact")}
-                  className="w-full bg-gradient-to-r from-primary to-ring"
+                  className="w-full"
                   data-testid="mobile-button-get-quote"
                 >
                   Get Quote
