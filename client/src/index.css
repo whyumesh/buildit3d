@@ -32,15 +32,15 @@
 
   --sidebar-border: 210 20% 83%;
 
-  --sidebar-primary: 220 85% 25%;
+  --sidebar-primary: 210 100% 56%;
 
-  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-primary-foreground: 0 0% 100%;
 
   --sidebar-accent: 210 20% 88%;
 
   --sidebar-accent-foreground: 210 15% 20%;
 
-  --sidebar-ring: 185 100% 60%;
+  --sidebar-ring: 210 100% 56%;
 
   --popover: 210 20% 90%;
 
@@ -48,9 +48,9 @@
 
   --popover-border: 210 20% 80%;
 
-  --primary: 220 85% 25%;
+  --primary: 210 100% 56%;
 
-  --primary-foreground: 0 0% 98%;
+  --primary-foreground: 0 0% 100%;
 
   --secondary: 210 20% 85%;
 
