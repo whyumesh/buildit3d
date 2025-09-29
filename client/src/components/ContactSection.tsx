@@ -124,7 +124,7 @@ export default function ContactSection() {
                         href="tel:+919372877291" 
                         className="text-primary hover:text-primary/80 transition-colors font-medium block"
                       >
-                        Yash Pawar: +91 93728 77291
+                        +91 93728 77291
                       </a>
                     </div>
                     <div>
@@ -132,7 +132,7 @@ export default function ContactSection() {
                         href="tel:+919082921245" 
                         className="text-primary hover:text-primary/80 transition-colors font-medium block"
                       >
-                        Sohan Yerandkar: +91 90829 21245
+                        +91 90829 21245
                       </a>
                     </div>
                     <p className="text-sm text-muted-foreground">Available Mon-Sat 9AM-7PM IST</p>
