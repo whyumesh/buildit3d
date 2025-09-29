@@ -100,8 +100,13 @@ export default function ContactSection() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">hello@builit3d.com</p>
-                  <p className="text-muted-foreground">quotes@builit3d.com</p>
+                  <a 
+                    href="mailto:buildit3d.services@gmail.com" 
+                    className="text-primary hover:text-primary/80 transition-colors font-medium"
+                  >
+                    buildit3d.services@gmail.com
+                  </a>
+                  <p className="text-sm text-muted-foreground mt-1">We respond within 24 hours</p>
                 </CardContent>
               </Card>
 
@@ -113,8 +118,25 @@ export default function ContactSection() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                  <p className="text-sm text-muted-foreground">Mon-Fri 9AM-6PM PST</p>
+                  <div className="space-y-2">
+                    <div>
+                      <a 
+                        href="tel:+919372877291" 
+                        className="text-primary hover:text-primary/80 transition-colors font-medium block"
+                      >
+                        Yash Pawar: +91 93728 77291
+                      </a>
+                    </div>
+                    <div>
+                      <a 
+                        href="tel:+919082921245" 
+                        className="text-primary hover:text-primary/80 transition-colors font-medium block"
+                      >
+                        Sohan Yerandkar: +91 90829 21245
+                      </a>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Available Mon-Sat 9AM-7PM IST</p>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -126,10 +148,32 @@ export default function ContactSection() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    123 Innovation Drive<br />
-                    Tech City, TC 12345
-                  </p>
+                  <div className="space-y-3">
+                    <p className="text-muted-foreground">
+                      Located in Maharashtra, India
+                    </p>
+                    <a 
+                      href="https://maps.app.goo.gl/BejPh5ueeDmM4NKa7?g_st=aw" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+                    >
+                      <MapPin className="mr-2 h-4 w-4" />
+                      View on Google Maps
+                    </a>
+                    <div className="mt-4">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.1234567890!2d73.1234567890!3d19.1234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA3JzI0LjQiTiA3M8KwMDcnMjQuNCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                        width="100%"
+                        height="200"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="rounded-lg"
+                      ></iframe>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -143,6 +187,9 @@ export default function ContactSection() {
                 <CardContent>
                   <p className="text-muted-foreground">
                     We typically respond to quotes within 24 hours
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Emergency projects: Same day response available
                   </p>
                 </CardContent>
               </Card>
