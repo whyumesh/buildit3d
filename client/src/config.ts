@@ -40,14 +40,22 @@ export type GalleryItem = {
   tag: "Gift" | "College project" | "Useful part";
 };
 
-// Real prints from the shop. Add a photo and a price per item before launch.
+// Real prints from the shop (photos from our Google Maps listing, 2026-11-25). Soham sets each "from ₹" price.
+const g = (title: string, caption: string, image: string, tag: GalleryItem["tag"]): GalleryItem =>
+  ({ title, caption, image, tag, priceFrom: null });
+
 export const GALLERY: GalleryItem[] = [
-  { title: "Ganesha bust", caption: "Fine detail, a gift people keep for years.", priceFrom: null, image: null, tag: "Gift" },
-  { title: "Name sign", caption: "Your name or a loved one's name for a desk or door.", priceFrom: null, image: null, tag: "Gift" },
-  { title: "Couple-name gift", caption: "Two names, one gift. For anniversaries and weddings.", priceFrom: null, image: null, tag: "Gift" },
-  { title: "Pet miniature from a photo", caption: "Send a photo of your pet. We make a small copy.", priceFrom: null, image: null, tag: "Gift" },
-  { title: "Truck model", caption: "A model truck for a boy, changed until it was just right.", priceFrom: null, image: null, tag: "Gift" },
-  { title: "Floor-plan model", caption: "A floor plan turned into a model you can hold.", priceFrom: null, image: null, tag: "College project" },
-  { title: "Drone casing", caption: "A strong ABS casing for a drone project.", priceFrom: null, image: null, tag: "Useful part" },
-  { title: "Cable organiser", caption: "Keeps your desk cables tidy.", priceFrom: null, image: null, tag: "Useful part" },
+  g("Ganesha bust", "Fine detail in white. A gift people keep for years.", "/gallery/ganesha.webp", "Gift"),
+  g("Hanuman figure", "Detailed idol, finished to look like stone.", "/gallery/hanuman.webp", "Gift"),
+  g("Name sign", "Any name, any colour, for a desk or a door.", "/gallery/name-sign.webp", "Gift"),
+  g("Heart", "A soft-textured heart, made as a gift.", "/gallery/heart.webp", "Gift"),
+  g("Cactus planter", "A cute two-colour planter with a cactus.", "/gallery/cactus-planter.webp", "Gift"),
+  g("Sheep figurine", "A small figurine on its own stand.", "/gallery/sheep.webp", "Gift"),
+  g("Pen holder", "Light voronoi pattern, only possible with 3D printing.", "/gallery/pen-holder.webp", "Gift"),
+  g("Hotel floor-plan model", "A floor plan turned into a model you can hold, with furniture.", "/gallery/floor-plan.webp", "College project"),
+  g("Robot car body", "Custom body for a student robot car, with space for the electronics.", "/gallery/robot-car.webp", "College project"),
+  g("Robot arm", "Servo-driven arm parts that fit together.", "/gallery/robot-arm.webp", "College project"),
+  g("Drone casing", "A strong ABS casing for a drone project.", "/gallery/drone-casing.webp", "Useful part"),
+  g("Number plates", "House or locker numbers in two colours.", "/gallery/number-plates.webp", "Useful part"),
+  g("Storage boxes", "Labelled boxes made to size.", "/gallery/storage-boxes.webp", "Useful part"),
 ];
