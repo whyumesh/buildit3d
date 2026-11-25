@@ -4,16 +4,24 @@
 
 html { scroll-behavior: smooth; }
 body { @apply bg-white text-ink antialiased; }
-[lang="mr"], [lang="hi"] { font-family: "Noto Sans Devanagari", "Poppins", system-ui, sans-serif; }
+[lang="mr"], [lang="hi"] { font-family: "Noto Sans Devanagari", Inter, system-ui, sans-serif; letter-spacing: 0; }
+::selection { background: #1399ec33; }
 
 @layer components {
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition-colors focus:outline-none focus-visible:ring-4; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold transition duration-200 focus:outline-none focus-visible:ring-4; }
   .btn-wa { @apply btn bg-wa text-white hover:bg-wa-dark focus-visible:ring-wa/30; }
-  .btn-brand { @apply btn bg-brand text-white hover:bg-brand-dark focus-visible:ring-brand/30; }
-  .btn-ghost { @apply btn border border-slate-300 bg-white text-ink hover:bg-slate-50 focus-visible:ring-brand/20; }
-  .field { @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-base focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20; }
-  .label { @apply mb-1 block text-sm font-semibold; }
-  .help { @apply mt-1 block text-xs text-slate-500; }
-  .section { @apply mx-auto max-w-5xl px-4 py-14 sm:py-20; }
-  .h2 { @apply text-2xl font-bold sm:text-3xl; }
+  .btn-brand { @apply btn bg-brand text-white shadow-[0_8px_24px_-8px_rgba(19,153,236,0.6)] hover:bg-brand-deep focus-visible:ring-brand/30; }
+  .btn-ghost { @apply btn border border-line bg-white text-ink hover:border-ink/30 focus-visible:ring-brand/20; }
+  .field { @apply block w-full rounded-xl border border-line bg-white px-4 py-3 text-base text-ink placeholder:text-mute/60 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15; }
+  .label { @apply mb-1.5 block text-sm font-semibold text-ink; }
+  .help { @apply mt-1.5 block text-xs text-mute; }
+  .section { @apply mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28; }
+  .eyebrow { @apply font-display text-xs font-bold uppercase tracking-[0.18em] text-brand; }
+  .h2 { @apply font-display text-3xl font-extrabold tracking-tightest sm:text-5xl; }
 }
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+select.field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235a6170' stroke-width='1.6'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }

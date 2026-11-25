@@ -68,9 +68,9 @@ export default function EnquiryForm({ path, onSwitch }: { path: Path; onSwitch: 
   const today = new Date().toISOString().slice(0, 10);
 
   return (
-    <section id="enquiry" className="scroll-mt-20 bg-white">
-      <div className="section max-w-2xl pt-4">
-        <div className="mb-6 flex gap-2 rounded-xl bg-slate-100 p-1 text-sm font-semibold" role="tablist">
+    <div id="enquiry" className="scroll-mt-20 px-5 pb-20 sm:px-8 sm:pb-28">
+      <div className="mx-auto max-w-2xl rounded-3xl border border-line bg-white p-6 shadow-[0_30px_80px_-40px_rgba(6,58,94,0.35)] sm:p-10">
+        <div className="mb-6 flex gap-2 rounded-full bg-soft p-1 text-sm font-semibold" role="tablist">
           {(["file", "photo"] as Path[]).map((p) => (
             <button
               key={p}
@@ -78,14 +78,14 @@ export default function EnquiryForm({ path, onSwitch }: { path: Path; onSwitch: 
               role="tab"
               aria-selected={path === p}
               onClick={() => { onSwitch(p); setSent(false); }}
-              className={`flex-1 rounded-lg px-3 py-2 ${path === p ? "bg-white shadow text-brand" : "text-slate-600"}`}
+              className={`flex-1 rounded-full px-3 py-2.5 transition ${path === p ? "bg-white text-brand shadow-sm" : "text-mute hover:text-ink"}`}
             >
               {p === "file" ? "I have a 3D file" : "I have a photo or idea"}
             </button>
           ))}
         </div>
 
-        <h2 className="h2">{path === "file" ? "Tell us about your file" : "Tell us what you want"}</h2>
+        <h2 className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">{path === "file" ? "Tell us about your file" : "Tell us what you want"}</h2>
 
         {sent ? (
           <AfterSend path={path} text={text} />
@@ -135,7 +135,7 @@ export default function EnquiryForm({ path, onSwitch }: { path: Path; onSwitch: 
                 <Field label="What is it for?" group>
                   <div className="grid grid-cols-2 gap-2">
                     {PURPOSES.map((p) => (
-                      <label key={p} className={`cursor-pointer rounded-lg border px-3 py-2.5 text-sm ${photo.purpose === p ? "border-brand bg-brand-soft font-semibold text-brand" : "border-slate-300"}`}>
+                      <label key={p} className={`cursor-pointer rounded-xl border px-3 py-3 transition text-sm ${photo.purpose === p ? "border-brand bg-brand-soft font-semibold text-brand" : "border-line hover:border-ink/30"}`}>
                         <input type="radio" name="purpose" value={p} checked={photo.purpose === p} onChange={() => setPhoto({ ...photo, purpose: p })} className="sr-only" />
                         {p}
                       </label>
@@ -159,26 +159,26 @@ export default function EnquiryForm({ path, onSwitch }: { path: Path; onSwitch: 
             <button type="submit" className="btn-wa w-full text-lg">
               <MessageCircle className="h-5 w-5" /> Send on WhatsApp
             </button>
-            <p className="text-center text-xs text-slate-500">
+            <p className="text-center text-xs text-mute">
               Opens WhatsApp with your answers. Nothing is saved on this website. We reply with a price; no instant quotes.
             </p>
           </form>
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
 function AfterSend({ path, text }: { path: Path; text: string }) {
   const what = path === "file" ? "your file" : "your photos";
   return (
-    <div className="mt-6 space-y-4 rounded-2xl border-2 border-wa/40 bg-green-50 p-6">
+    <div className="mt-6 space-y-4 rounded-2xl border border-wa/30 bg-green-50/70 p-6">
       <p className="text-lg font-semibold">
         WhatsApp is opening with your details. Please attach {what} in that chat and press Send.
       </p>
-      <p className="text-slate-700">We will check it and reply there with a price.</p>
-      <p lang="mr" className="text-slate-700">WhatsApp उघडत आहे. त्या चॅटमध्ये तुमची फाईल किंवा फोटो जोडा आणि Send दाबा. आम्ही तपासून तिथेच किंमत कळवू.</p>
-      <p lang="hi" className="text-slate-700">WhatsApp खुल रहा है। उस चैट में अपनी फाइल या फोटो जोड़ें और Send दबाएं। हम देखकर वहीं कीमत बताएंगे।</p>
+      <p className="text-ink/75">We will check it and reply there with a price.</p>
+      <p lang="mr" className="text-ink/75">WhatsApp उघडत आहे. त्या चॅटमध्ये तुमची फाईल किंवा फोटो जोडा आणि Send दाबा. आम्ही तपासून तिथेच किंमत कळवू.</p>
+      <p lang="hi" className="text-ink/75">WhatsApp खुल रहा है। उस चैट में अपनी फाइल या फोटो जोड़ें और Send दबाएं। हम देखकर वहीं कीमत बताएंगे।</p>
       <div className="flex flex-wrap gap-3 pt-2">
         <a href={waLink(text)} target="_blank" rel="noopener noreferrer" className="btn-wa">
           <MessageCircle className="h-5 w-5" /> Open WhatsApp again
@@ -208,8 +208,8 @@ function Field({ label, help, group, children }: { label: string; help?: string;
 
 function Note({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
-      <span className="mt-0.5 shrink-0">{icon}</span>
+    <div className="flex gap-3 rounded-2xl bg-brand-soft p-4 text-sm text-brand-ink">
+      <span className="mt-0.5 shrink-0 text-brand">{icon}</span>
       <p>{children}</p>
     </div>
   );
