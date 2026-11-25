@@ -1,5 +1,14 @@
-import { createRoot } from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+const root = document.getElementById("root")!;
+const app = (
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+// The build pre-renders the page into #root (for search engines); hydrate it if present.
+if (root.hasChildNodes()) hydrateRoot(root, app);
+else createRoot(root).render(app);
