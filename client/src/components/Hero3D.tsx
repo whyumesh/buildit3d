@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
+import { toCreasedNormals } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 /**
  * Hero: our own designs printing themselves on a 3D print bed.
@@ -11,10 +12,10 @@ import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeom
 
 type Item = { file: string; label: string; color: number; scale?: number; rotateZ?: number };
 const ITEMS: Item[] = [
-  { file: "/models/gearbox.bin", label: "Herringbone planetary gearbox", color: 0x1399ec, scale: 1.55 },
-  { file: "/models/vase.bin", label: "Twisted vase", color: 0xf5b7c9, scale: 1.15 },
-  { file: "/models/truck-cab.bin", label: "Toy truck cab, part of a custom model", color: 0xf6d23a, scale: 1.7, rotateZ: 0.5 },
-  { file: "/models/cube.bin", label: "The Buildit3D cube", color: 0x93d5b4, scale: 1.5, rotateZ: Math.PI / 4 },
+  { file: "/models/gearbox.bin", label: "Herringbone planetary gearbox", color: 0x1399ec, scale: 1.8 },
+  { file: "/models/vase.bin", label: "Twisted vase", color: 0xf5b7c9, scale: 1.3 },
+  { file: "/models/truck-cab.bin", label: "Toy truck cab, part of a custom model", color: 0xf6d23a, scale: 2.0, rotateZ: 0.5 },
+  { file: "/models/cube.bin", label: "The Buildit3D cube", color: 0x93d5b4, scale: 1.8, rotateZ: Math.PI / 4 },
 ];
 const PRINT_S = 5.2, HOLD_S = 2.6, FADE_S = 0.6;
 const LAYER = 0.6; // visual layer thickness (mm) for the line texture
@@ -37,9 +38,9 @@ async function loadBin(url: string): Promise<THREE.BufferGeometry> {
   g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
   g.setIndex(new THREE.BufferAttribute(idx, 1));
   g.translate(-(min[0] + max[0]) / 2, -(min[1] + max[1]) / 2, -min[2]);
-  g.computeVertexNormals();
-  g.computeBoundingBox();
-  return g;
+  const crisp = toCreasedNormals(g, THREE.MathUtils.degToRad(35)); // sharp gear teeth, smooth curves
+  crisp.computeBoundingBox();
+  return crisp;
 }
 
 /** Standard material with fine horizontal layer lines, like a real FDM print. */
@@ -81,7 +82,7 @@ export default function Hero3D({ className = "" }: { className?: string }) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(32, 1, 1, 3000);
     camera.up.set(0, 0, 1);
-    camera.position.set(190, -230, 150);
+    camera.position.set(200, -250, 170);
 
     scene.add(new THREE.HemisphereLight(0xffffff, 0xd6ecfb, 1.5));
     const key = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -132,8 +133,39 @@ export default function Hero3D({ className = "" }: { className?: string }) {
     head.add(body, stripe, cone, glow);
     head.traverse((o) => ((o as THREE.Mesh).castShadow = true));
     scene.add(head);
-    const rail = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 230, 16), new THREE.MeshStandardMaterial({ color: 0x2a2f36, metalness: 0.6, roughness: 0.35 }));
-    rail.rotation.z = Math.PI / 2;
+    // Gantry: two uprights ride on side tracks (Y); the X rail between them moves up with each layer (Z).
+    const metal = new THREE.MeshStandardMaterial({ color: 0x2a2f36, metalness: 0.6, roughness: 0.35 });
+    const blue = new THREE.MeshStandardMaterial({ color: 0x1399ec, roughness: 0.4 });
+    const SIDE = 122, TRACK = 250, TOWER = 150;
+    for (const x of [-SIDE, SIDE]) {
+      const track = new THREE.Mesh(new RoundedBoxGeometry(10, TRACK, 6, 2, 2), metal);
+      track.position.set(x, 0, -3);
+      track.receiveShadow = true;
+      scene.add(track);
+    }
+    const gantry = new THREE.Group();
+    for (const x of [-SIDE, SIDE]) {
+      const foot = new THREE.Mesh(new RoundedBoxGeometry(16, 20, 10, 2, 3), blue);
+      foot.position.set(x, 0, 3);
+      const tower = new THREE.Mesh(new RoundedBoxGeometry(8, 12, TOWER, 2, 2), metal);
+      tower.position.set(x, 0, TOWER / 2 + 6);
+      const cap = new THREE.Mesh(new RoundedBoxGeometry(12, 16, 6, 2, 2), blue);
+      cap.position.set(x, 0, TOWER + 9);
+      for (const m of [foot, tower, cap]) { m.castShadow = true; gantry.add(m); }
+    }
+    scene.add(gantry);
+    const rail = new THREE.Group();
+    const bar = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, SIDE * 2, 16), metal);
+    bar.rotation.z = Math.PI / 2;
+    const bar2 = bar.clone();
+    bar2.position.z = 7;
+    rail.add(bar, bar2);
+    for (const x of [-SIDE, SIDE]) {
+      const block = new THREE.Mesh(new RoundedBoxGeometry(14, 18, 16, 2, 3), blue);
+      block.position.set(x, 0, 3.5);
+      rail.add(block);
+    }
+    rail.traverse((o) => ((o as THREE.Mesh).castShadow = true));
     scene.add(rail);
 
     // Clipping: model shows below `cut`; the glow band shows between cut - band and cut
@@ -174,7 +206,7 @@ export default function Hero3D({ className = "" }: { className?: string }) {
     controls.autoRotateSpeed = 0.9;
     controls.minPolarAngle = 0.35;
     controls.maxPolarAngle = 1.35;
-    controls.target.set(0, 0, 18);
+    controls.target.set(0, 0, 45);
     if (touch) controls.enabled = false; // let phones scroll the page; the scene still turns by itself
     let idleTimer = 0;
     controls.addEventListener("start", () => { controls.autoRotate = false; clearTimeout(idleTimer); });
@@ -186,9 +218,11 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       renderer.domElement.style.width = "100%";
       renderer.domElement.style.height = "100%";
       camera.aspect = width / Math.max(height, 1);
-      // keep the bed in frame on narrow screens
-      const d = camera.aspect < 1 ? 390 / camera.aspect ** 0.45 : 400;
-      camera.position.setLength(d);
+      // fit the whole printer (frame is ~±135 mm wide, ~170 mm tall) whatever the canvas shape
+      const v = THREE.MathUtils.degToRad(camera.fov) / 2;
+      const hz = Math.atan(Math.tan(v) * camera.aspect);
+      const d = Math.max(165 / Math.tan(hz), 125 / Math.tan(v)) * 1.08;
+      camera.position.sub(controls.target).setLength(d).add(controls.target);
       camera.updateProjectionMatrix();
     };
     const ro = new ResizeObserver(resize);
@@ -217,10 +251,11 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       const s = now / 1000;
       const a = s * 5.2;
       const rr = r * (0.55 + 0.4 * Math.sin(s * 1.7));
-      const hz = p < 1 ? z : h + 25 + Math.min((t - PRINT_S) * 30, 40);
+      const hz = p < 1 ? z : h + Math.min((t - PRINT_S) * 30, 18);
       head.position.set(Math.cos(a) * rr, Math.sin(a) * rr, hz + 0.6);
       glow.intensity = p < 1 ? 900 : 0;
-      rail.position.set(0, head.position.y, hz + 18);
+      rail.position.set(0, head.position.y, hz + 14);
+      gantry.position.y = head.position.y;
 
       // hold, then fade out and switch model
       const end = PRINT_S + HOLD_S;
