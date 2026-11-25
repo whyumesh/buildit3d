@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GALLERY, type GalleryItem } from "../config";
+import Tilt from "./Tilt";
 
 const inr = (n: number) => n.toLocaleString("en-IN");
 const FILTERS: ("All" | GalleryItem["tag"])[] = ["All", "Gift", "College project", "Useful part"];
@@ -29,7 +30,8 @@ export default function Gallery() {
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {items.map((item) => (
-            <figure key={item.title} className="group overflow-hidden rounded-3xl border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-24px_rgba(19,153,236,0.45)]">
+            <Tilt key={item.title} className="rounded-3xl">
+            <figure className="h-full overflow-hidden rounded-3xl border border-line bg-white transition-shadow duration-300 group-hover:shadow-[0_30px_60px_-28px_rgba(19,153,236,0.55)]">
               {item.image ? (
                 <img src={item.image} alt={item.title} loading="lazy" className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
               ) : (
@@ -46,6 +48,7 @@ export default function Gallery() {
                 <p className="mt-3 text-sm font-semibold">{item.priceFrom != null ? `from ₹${inr(item.priceFrom)}` : "Price on WhatsApp"}</p>
               </figcaption>
             </figure>
+            </Tilt>
           ))}
         </div>
         <p className="mt-6 text-xs text-mute">Prices depend on size, colour and quantity. We confirm the exact price on WhatsApp before printing.</p>

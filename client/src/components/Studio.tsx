@@ -3,7 +3,6 @@ import type { BufferGeometry } from "three";
 import { Upload, MessageCircle, Mail, RotateCw, Ruler, AlertTriangle, X, Camera, FileBox, Coins, Paperclip, Check } from "lucide-react";
 import { COLOUR_HEX, SHOP, STOCK, waLink } from "../config";
 import { BED_MM, estimate, type Geometry } from "../estimate";
-import PrintAnimation from "./PrintAnimation";
 
 const ModelViewer = lazy(() => import("./ModelViewer"));
 
@@ -118,7 +117,14 @@ function FilePath() {
             drag ? "border-brand bg-brand-soft" : "border-brand/30 bg-gradient-to-b from-brand-soft/60 to-white hover:border-brand"
           }`}
         >
-          <PrintAnimation className="pointer-events-none h-56 w-full sm:h-64" />
+          <div className="pointer-events-none flex h-52 w-full items-center justify-center [perspective:700px] sm:h-60">
+            <div className="relative h-24 w-24 animate-[spin3d_9s_linear_infinite] [transform-style:preserve-3d] group-hover:[animation-duration:3s]">
+              {["rotateY(0deg)", "rotateY(90deg)", "rotateY(180deg)", "rotateY(-90deg)", "rotateX(90deg)", "rotateX(-90deg)"].map((r) => (
+                <span key={r} className="absolute inset-0 rounded-md border-2 border-brand/70 bg-brand/5 shadow-[0_0_30px_rgba(19,153,236,0.25)_inset]" style={{ transform: `${r} translateZ(48px)` }} />
+              ))}
+            </div>
+            <Upload className="absolute h-7 w-7 animate-bounce text-brand" />
+          </div>
           <span className="btn-brand -mt-4"><Upload className="h-4 w-4" /> Choose your 3D file</span>
           <span className="mt-3 text-sm text-mute">or drag it here · STL, 3MF or STEP</span>
           <span className="mt-1 text-xs text-mute">See it in 3D, its size and a rough price. The file stays on your phone.</span>

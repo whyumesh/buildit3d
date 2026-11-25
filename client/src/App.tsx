@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { MessageCircle, Phone, Star, ArrowDown, ArrowUpRight, MapPin, Mail, Store, ShieldCheck } from "lucide-react";
 import { SHOP, telLink, waLink } from "./config";
 import Studio, { type Path } from "./components/Studio";
 import Gallery from "./components/Gallery";
 import HowItWorks from "./components/HowItWorks";
 import Faq from "./components/Faq";
+import Marquee from "./components/Marquee";
+
+const Hero3D = lazy(() => import("./components/Hero3D"));
 
 const HELLO = "Hi Buildit3D, I want to get something 3D printed.";
 
@@ -56,36 +59,37 @@ export default function App() {
         {/* Hero + studio */}
         <section className="relative overflow-hidden bg-gradient-to-b from-brand-soft via-white to-white pt-20">
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(19,153,236,0.16)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
-          <div className="relative mx-auto max-w-6xl px-5 pb-8 pt-10 sm:px-8 sm:pt-16">
-            <div className="grid items-end gap-8 lg:grid-cols-[1.35fr_1fr]">
-              <div>
-                <p className="eyebrow inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {SHOP.area} · Thane</p>
-                <h1 className="mt-4 font-display text-[2.5rem] font-extrabold leading-[1.04] tracking-tightest sm:text-6xl lg:text-[4.4rem]">
-                  Custom 3D printing in <span className="text-brand">Thane West</span>
-                </h1>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-mute">
-                  Gifts, college projects and useful parts. Drop your 3D file to see it and get a rough price, or send us a photo of your idea.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <button onClick={() => go("file")} className="btn-brand">I have a 3D file <ArrowDown className="h-4 w-4" /></button>
-                  <button onClick={() => go("photo")} className="btn-ghost">I have a photo or idea</button>
-                </div>
+          <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] animate-[float_14s_ease-in-out_infinite] rounded-full bg-brand/20 blur-[120px]" />
+          <div aria-hidden className="pointer-events-none absolute -left-32 top-1/3 h-[380px] w-[380px] animate-[float_18s_ease-in-out_infinite_reverse] rounded-full bg-sky-300/25 blur-[110px]" />
+          <div className="relative mx-auto grid max-w-6xl items-center gap-2 px-5 pt-8 sm:px-8 lg:grid-cols-[1.05fr_1fr] lg:pt-12">
+            <div className="lg:pb-10">
+              <p className="eyebrow inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {SHOP.area} · Thane</p>
+              <h1 className="mt-4 font-display text-[2.6rem] font-extrabold leading-[1.02] tracking-tightest sm:text-6xl lg:text-[4.6rem]">
+                <span className="block animate-[rise_.9s_cubic-bezier(.2,.7,.2,1)_both]">Custom 3D</span>
+                <span className="block animate-[rise_.9s_.08s_cubic-bezier(.2,.7,.2,1)_both]">printing in</span>
+                <span className="block animate-[rise_.9s_.16s_cubic-bezier(.2,.7,.2,1)_both] bg-gradient-to-r from-brand via-sky-400 to-brand bg-[length:200%_auto] bg-clip-text text-transparent [animation:rise_.9s_.16s_cubic-bezier(.2,.7,.2,1)_both,shine_6s_linear_infinite]">Thane West</span>
+              </h1>
+              <p className="mt-5 max-w-xl animate-[rise_.9s_.24s_cubic-bezier(.2,.7,.2,1)_both] text-lg leading-relaxed text-mute">
+                Gifts, college projects and useful parts. Drop your 3D file to see it and get a rough price, or send us a photo of your idea.
+              </p>
+              <div className="mt-7 flex animate-[rise_.9s_.32s_cubic-bezier(.2,.7,.2,1)_both] flex-wrap gap-3">
+                <button onClick={() => go("file")} className="btn-brand">I have a 3D file <ArrowDown className="h-4 w-4" /></button>
+                <button onClick={() => go("photo")} className="btn-ghost">I have a photo or idea</button>
               </div>
-              <ul className="grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1">
-                <Trust icon={<Star className="h-4 w-4 fill-amber-400 text-amber-400" />} href={SHOP.mapsUrl}>
-                  <b>{SHOP.googleRating} on Google</b> · {SHOP.googleReviews} reviews
-                </Trust>
-                <Trust icon={<ShieldCheck className="h-4 w-4 text-brand" />}>
-                  <b>A person checks every job</b> · final price on WhatsApp
-                </Trust>
-                <Trust icon={<Store className="h-4 w-4 text-brand" />}>
-                  <b>Pick up in Thane West</b> · talk in मराठी, हिंदी or English
-                </Trust>
+              <ul className="mt-8 flex animate-[rise_.9s_.4s_cubic-bezier(.2,.7,.2,1)_both] flex-wrap gap-x-6 gap-y-2 text-sm text-ink/75">
+                <li><a href={SHOP.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-ink"><Star className="h-4 w-4 fill-amber-400 text-amber-400" /><b>{SHOP.googleRating}</b> on Google · {SHOP.googleReviews} reviews</a></li>
+                <li className="inline-flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-brand" />A person checks every job</li>
+                <li className="inline-flex items-center gap-1.5"><Store className="h-4 w-4 text-brand" />Pick up in Thane West</li>
               </ul>
             </div>
+            <Suspense fallback={<div className="h-[360px] sm:h-[460px] lg:h-[560px]" />}>
+              <Hero3D className="-mx-5 h-[360px] sm:mx-0 sm:h-[460px] lg:h-[560px]" />
+            </Suspense>
           </div>
 
-          <div className="relative mx-auto max-w-6xl px-3 pb-20 sm:px-8 sm:pb-28">
+          <Marquee />
+
+          <div className="relative mx-auto max-w-6xl px-3 pb-20 pt-12 sm:px-8 sm:pb-28 sm:pt-16">
             <Studio path={path} setPath={setPath} />
           </div>
         </section>
@@ -142,16 +146,6 @@ export default function App() {
       </a>
     </>
   );
-}
-
-function Trust({ icon, href, children }: { icon: React.ReactNode; href?: string; children: React.ReactNode }) {
-  const inner = (
-    <span className="flex items-center gap-3 rounded-2xl border border-line bg-white/80 px-4 py-3 text-ink/80 backdrop-blur">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft">{icon}</span>
-      <span>{children}</span>
-    </span>
-  );
-  return <li>{href ? <a href={href} target="_blank" rel="noopener noreferrer" className="block transition hover:-translate-y-0.5">{inner}</a> : inner}</li>;
 }
 
 /** "BUILDIT3D" in the logo's style: bold black with "3D" in brand blue. */
