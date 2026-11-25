@@ -1,17 +1,4 @@
-import { STOCK } from "../config";
-
-const materials = Object.entries(STOCK)
-  .map(([m, cs]) => `${m} (${cs.map((c) => c.toLowerCase()).join(", ")})`)
-  .join(", ");
-
-const FAQ = [
-  { q: "Do I need a 3D file?", a: "No. Send a photo or tell us your idea. We design it for you. If you do have a file (STL, 3MF or STEP), send it and we will check it." },
-  { q: "How big can you print?", a: "One piece can be up to about 25 cm long, 25 cm wide and 25 cm tall. Something bigger? Ask us on WhatsApp." },
-  { q: "How long does it take?", a: "Small items can be quick, bigger items take longer. We tell you the date together with the price." },
-  { q: "How do I pay, and how do I collect?", a: "We agree the price on WhatsApp first. Ask us there about payment. You collect from our shop in Thane West." },
-  { q: "What materials do you use?", a: `Right now: ${materials}. Not sure which is right? Tell us how you will use it and we will suggest one.` },
-  { q: "Is the price fixed before you print?", a: "Yes. We check every request and send the price on WhatsApp. There is no instant price on this website." },
-];
+import { FAQ } from "../content";
 
 export default function Faq() {
   return (

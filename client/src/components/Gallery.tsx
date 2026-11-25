@@ -33,7 +33,7 @@ export default function Gallery() {
             <Tilt key={item.title} className="rounded-3xl">
             <figure className="h-full overflow-hidden rounded-3xl border border-line bg-white transition-shadow duration-300 group-hover:shadow-[0_30px_60px_-28px_rgba(19,153,236,0.55)]">
               {item.image ? (
-                <img src={item.image} alt={item.title} loading="lazy" className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+                <img src={item.image} alt={`${item.title}, 3D printed by Buildit3D in Thane`} loading="lazy" decoding="async" width={900} height={900} className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
               ) : (
                 <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden bg-gradient-to-br from-brand-soft to-white">
                   <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle,rgba(19,153,236,0.18)_1px,transparent_1px)] [background-size:14px_14px]" />

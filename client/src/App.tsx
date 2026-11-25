@@ -6,6 +6,7 @@ import Gallery from "./components/Gallery";
 import HowItWorks from "./components/HowItWorks";
 import Faq from "./components/Faq";
 import Marquee from "./components/Marquee";
+import WhatWePrint from "./components/WhatWePrint";
 
 const Hero3D = lazy(() => import("./components/Hero3D"));
 
@@ -25,6 +26,9 @@ function useReveal() {
 
 export default function App() {
   const [path, setPath] = useState<Path>("file");
+  // the 3D hero is browser-only: the pre-rendered page and the first browser render show the same empty box
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   useReveal();
 
   const go = (p: Path) => {
@@ -45,6 +49,7 @@ export default function App() {
             <Wordmark className="text-xl" />
           </a>
           <nav className="flex items-center gap-1 text-sm text-mute">
+            <a href="#services" className="hidden rounded-full px-3 py-2 hover:text-ink lg:inline">What we print</a>
             <a href="#gallery" className="hidden rounded-full px-3 py-2 hover:text-ink md:inline">Our prints</a>
             <a href="#how" className="hidden rounded-full px-3 py-2 hover:text-ink md:inline">How it works</a>
             <a href="#faq" className="hidden rounded-full px-3 py-2 hover:text-ink md:inline">Questions</a>
@@ -82,9 +87,13 @@ export default function App() {
                 <li className="inline-flex items-center gap-1.5"><Store className="h-4 w-4 text-brand" />Pick up in Thane West</li>
               </ul>
             </div>
-            <Suspense fallback={<div className="h-[360px] sm:h-[460px] lg:h-[560px]" />}>
-              <Hero3D className="-mx-5 h-[360px] sm:mx-0 sm:h-[460px] lg:h-[560px]" />
-            </Suspense>
+            {mounted ? (
+              <Suspense fallback={<div className="h-[360px] sm:h-[460px] lg:h-[560px]" />}>
+                <Hero3D className="-mx-5 h-[360px] sm:mx-0 sm:h-[460px] lg:h-[560px]" />
+              </Suspense>
+            ) : (
+              <div className="h-[360px] sm:h-[460px] lg:h-[560px]" />
+            )}
           </div>
 
           <Marquee />
@@ -106,6 +115,7 @@ export default function App() {
           </div>
         </section>
 
+        <WhatWePrint />
         <Gallery />
         <HowItWorks />
         <Faq />

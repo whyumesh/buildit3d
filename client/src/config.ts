@@ -9,6 +9,10 @@ export const SHOP = {
   phoneIntl: "919967576250", // +91 99675 76250, digits only for wa.me and tel:
   email: "buildit3d.services@gmail.com", // fallback for people without WhatsApp
   mapsUrl: "https://maps.app.goo.gl/BejPh5ueeDmM4NKa7",
+  // From the Google Business Profile (Maps listing), 2026-11-25
+  street: "Ahinsa Marg, Yashodhan Nagar",
+  postcode: "400606",
+  geo: [19.2083701, 72.9541467] as [number, number],
   googleRating: "5.0",
   googleReviews: 38,
 };
