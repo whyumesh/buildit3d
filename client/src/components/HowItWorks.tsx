@@ -1,8 +1,10 @@
+import { Send, Search, ThumbsUp, Printer } from "lucide-react";
+
 const STEPS = [
-  { en: "Send us your file, or photos and your idea, on WhatsApp.", mr: "WhatsApp वर फाईल किंवा फोटो पाठवा.", hi: "WhatsApp पर फाइल या फोटो भेजें।" },
-  { en: "We check it and reply with a price. Every request is checked by a person.", mr: "आम्ही तपासून किंमत सांगतो.", hi: "हम देखकर कीमत बताते हैं।" },
-  { en: "You say yes. If you only have a photo, we design it for you first.", mr: "तुम्ही हो म्हणता.", hi: "आप हां कहें।" },
-  { en: "We print it. You pick it up from our shop in Thane West.", mr: "आम्ही प्रिंट करतो, तुम्ही घ्यायला या.", hi: "हम प्रिंट करते हैं, आप ले जाएं।" },
+  { icon: Send, t: "Send", d: "Your 3D file, or photos and your idea, on WhatsApp." },
+  { icon: Search, t: "We check", d: "A person looks at every job and replies with the price." },
+  { icon: ThumbsUp, t: "You say yes", d: "Only a photo? We design it and show you first." },
+  { icon: Printer, t: "We print", d: "Pick it up from our shop in Thane West." },
 ];
 
 export default function HowItWorks() {
@@ -11,13 +13,17 @@ export default function HowItWorks() {
       <div className="section">
         <p className="eyebrow">Simple</p>
         <h2 className="h2 mt-4">How it works</h2>
-        <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, i) => (
-            <li key={i} className="reveal rounded-3xl border border-line bg-white p-6">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand font-display font-bold text-white">{i + 1}</span>
-              <p className="mt-4 font-medium leading-relaxed">{s.en}</p>
-              <p lang="mr" className="mt-3 text-sm text-mute">{s.mr}</p>
-              <p lang="hi" className="text-sm text-mute">{s.hi}</p>
+        <ol className="relative mt-14 grid gap-10 md:grid-cols-4 md:gap-6">
+          <span aria-hidden className="absolute left-6 top-6 hidden h-px w-[calc(100%-3rem)] bg-gradient-to-r from-brand via-brand/40 to-brand/10 md:block" />
+          {STEPS.map(({ icon: Icon, t, d }, i) => (
+            <li key={t} className="reveal relative flex gap-4 md:block" style={{ transitionDelay: `${i * 90}ms` }}>
+              <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand text-white shadow-[0_10px_24px_-10px_rgba(19,153,236,0.8)]">
+                <Icon className="h-5 w-5" />
+              </span>
+              <div className="md:mt-5">
+                <p className="font-display text-lg font-bold"><span className="text-brand">0{i + 1}</span> {t}</p>
+                <p className="mt-1 leading-relaxed text-mute">{d}</p>
+              </div>
             </li>
           ))}
         </ol>

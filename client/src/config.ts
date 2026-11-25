@@ -24,6 +24,12 @@ export const STOCK: Record<string, string[]> = {
   ABS: ["Silver"],
 };
 
+// Swatch colours for the 3D preview and colour picker (approximate on screen).
+export const COLOUR_HEX: Record<string, string> = {
+  White: "#f3f3f1", Black: "#2a2a2c", "Baby pink": "#f5b7c9", Yellow: "#f6d23a",
+  "Sea green (pista)": "#93d5b4", Skin: "#e9c4a2", Silver: "#b9bdc4", "Not sure": "#1399ec",
+};
+
 export type GalleryItem = {
   title: string;
   caption: string;
